@@ -1,94 +1,135 @@
-# Obsidian Sample Plugin
+# Folder Structure Tree Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+This plugin for Obsidian generates a folder structure tree based on a provided JSON file. It parses the JSON file and creates folders and files within the Obsidian vault according to the specified structure.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## Features
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+- Parse a JSON file to define a hierarchical folder and file structure.
+- Automatically create folders and files in the current vault.
+- Supports nested subfolders and files at multiple levels.
 
-## First time developing plugins?
+## JSON Format
+
+The plugin uses a specific JSON format to define the folder structure. Below is an example:
+
+```json
+{
+  "Folder 1": {
+    "Subfolder 1": ["file1.md", "file2.md"],
+    "Subfolder 2": ["file3.md", "file4.md"]
+  },
+  "Folder 2": {
+    "Subfolder 3": {
+      "Subsubfolder 1": ["file5.md", "file6.md"],
+      "Subsubfolder 2": ["file7.md", "file8.md"]
+    }
+  }
+}
+```
+
+### Rules for the JSON Format:
+
+- Each key represents a folder.
+- Values can be:
+  - An array of strings, representing file names inside the folder.
+  - Another nested object, representing subfolders.
+
+## First Time Developing Plugins?
 
 Quick starting guide for new plugin devs:
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+1. Check for existing plugins to avoid duplication.
+2. Use this repository template to create your plugin.
+3. Follow the setup steps for development, testing, and deployment.
 
-## Releasing new releases
+## How to Use
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+1. Clone the repository.
+2. Ensure your NodeJS version is at least 16 (`node --version`).
+3. Install dependencies with `npm i` or `yarn`.
+4. Start the development server with `npm run dev`.
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+## Plugin Usage
 
-## Adding your plugin to the community plugin list
+### Enable the Plugin
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+1. Install the plugin by copying `main.js`, `styles.css`, and `manifest.json` to `VaultFolder/.obsidian/plugins/folder-structure-tree/`.
+2. Reload Obsidian and enable the plugin in the settings.
 
-## How to use
+### Provide JSON Input
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+1. Place the JSON file describing the folder structure in your vault.
+2. Use the ribbon icon or command palette to trigger the plugin.
 
-## Manually installing the plugin
+### Generate the Folder Structure
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+1. Click the ribbon icon or use the command palette to load the JSON file.
+2. The plugin will create folders and files according to the JSON hierarchy.
 
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
+## Plugin API Features
+
+- **Ribbon Icon**: Adds an icon to the ribbon for quick access to the folder generation feature.
+- **Command Palette Command**: "Generate Folder Tree from JSON" allows you to trigger folder generation.
+- **Plugin Settings**: Configure the default path for the JSON file and additional options.
+- **Event Logging**: Logs actions such as folder and file creation in the console for debugging purposes.
+
+## Releasing New Versions
+
+1. Update the `manifest.json` file with the new version.
+2. Add an entry to `versions.json` for compatibility with older Obsidian versions.
+3. Publish the release on GitHub with all required files attached (`manifest.json`, `main.js`, `styles.css`).
+
+## Improve Code Quality with ESLint (Optional)
+
+1. Install ESLint: `npm install -g eslint`
+2. Analyze the code: `eslint main.ts`
+3. Address any issues highlighted in the report.
 
 ## Funding URL
 
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
+Support the development of this plugin by using the following funding links:
 
 ```json
 {
-    "fundingUrl": "https://buymeacoffee.com"
+  "fundingUrl": {
+    "Buy Me a Coffee": "https://buymeacoffee.com",
+    "GitHub Sponsor": "https://github.com/sponsors",
+    "Patreon": "https://www.patreon.com/"
+  }
 }
 ```
 
-If you have multiple URLs, you can also do:
+## Example JSON Input and Output
+
+### Input JSON:
 
 ```json
 {
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
+  "Projects": {
+    "Obsidian Plugin": ["readme.md", "changelog.md"],
+    "Templates": {
+      "Meeting Notes": ["template.md"],
+      "Project Plan": ["plan.md"]
     }
+  },
+  "Notes": ["personal.md", "work.md"]
 }
 ```
 
-## API Documentation
+### Result in Vault:
 
-See https://github.com/obsidianmd/obsidian-api
+```plaintext
+Vault/
+├── Projects/
+│   ├── Obsidian Plugin/
+│   │   ├── readme.md
+│   │   └── changelog.md
+│   ├── Templates/
+│   │   ├── Meeting Notes/
+│   │   │   └── template.md
+│   │   └── Project Plan/
+│   │       └── plan.md
+├── Notes/
+│   ├── personal.md
+│   └── work.md
+```
