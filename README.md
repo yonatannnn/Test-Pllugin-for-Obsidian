@@ -34,13 +34,6 @@ The plugin uses a specific JSON format to define the folder structure. Below is 
   - An array of strings, representing file names inside the folder.
   - Another nested object, representing subfolders.
 
-## First Time Developing Plugins?
-
-Quick starting guide for new plugin devs:
-
-1. Check for existing plugins to avoid duplication.
-2. Use this repository template to create your plugin.
-3. Follow the setup steps for development, testing, and deployment.
 
 ## How to Use
 
@@ -66,41 +59,7 @@ Quick starting guide for new plugin devs:
 1. Click the ribbon icon or use the command palette to load the JSON file.
 2. The plugin will create folders and files according to the JSON hierarchy.
 
-## Plugin API Features
-
-- **Ribbon Icon**: Adds an icon to the ribbon for quick access to the folder generation feature.
-- **Command Palette Command**: "Generate Folder Tree from JSON" allows you to trigger folder generation.
-- **Plugin Settings**: Configure the default path for the JSON file and additional options.
-- **Event Logging**: Logs actions such as folder and file creation in the console for debugging purposes.
-
-## Releasing New Versions
-
-1. Update the `manifest.json` file with the new version.
-2. Add an entry to `versions.json` for compatibility with older Obsidian versions.
-3. Publish the release on GitHub with all required files attached (`manifest.json`, `main.js`, `styles.css`).
-
-## Improve Code Quality with ESLint (Optional)
-
-1. Install ESLint: `npm install -g eslint`
-2. Analyze the code: `eslint main.ts`
-3. Address any issues highlighted in the report.
-
-## Funding URL
-
-Support the development of this plugin by using the following funding links:
-
-```json
-{
-  "fundingUrl": {
-    "Buy Me a Coffee": "https://buymeacoffee.com",
-    "GitHub Sponsor": "https://github.com/sponsors",
-    "Patreon": "https://www.patreon.com/"
-  }
-}
-```
-
-## Example JSON Input and Output
-
+### Example Usage
 ### Input JSON:
 
 ```json
